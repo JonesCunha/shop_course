@@ -11,6 +11,8 @@ class Product with ChangeNotifier {
   final String imageUrl;
   bool isFavorite;
 
+  // Adicionado cometarios
+
   Product({
     required this.id,
     required this.name,
