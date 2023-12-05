@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class Product with ChangeNotifier{
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class Product with ChangeNotifier {
   final String id;
   final String name;
   final String description;
@@ -17,8 +20,14 @@ class Product with ChangeNotifier{
     this.isFavorite = false,
   });
 
-  void toggleFavorite() {
+  Future<void> toggleFavorite(Product product) async {
+    final _baseUrl =
+        'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
+
     isFavorite = !isFavorite;
     notifyListeners();
+
+    await http.patch(Uri.parse('$_baseUrl/${product.id}.json'),
+        body: jsonEncode({'isFavorite': isFavorite}));
   }
 }

@@ -37,7 +37,7 @@ class ProductGridItem extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             // focusColor: Colors.amber.withOpacity(0.3),
             onPressed: () {
-              product.toggleFavorite();
+              product.toggleFavorite(product);
             },
           ),
           trailing: IconButton(

@@ -25,7 +25,7 @@ class ProductList with ChangeNotifier {
           id: key,
           name: value['name'],
           description: value['description'],
-          price: double.parse(value['price']),
+          price: double.parse(value['price'].toString()),
           imageUrl: value['imageUrl'],
         ),
       );
