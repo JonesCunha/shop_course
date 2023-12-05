@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_curse/pages/auth_page.dart';
 import 'package:shop_curse/pages/cart_page.dart';
 import 'package:shop_curse/pages/orders_page.dart';
 import 'package:shop_curse/pages/product_detail_page.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.PRODUCT_DETAIL_PAGE: (context) => const ProductDetailPage(),
           AppRoutes.CART_PAGE: (context) => const CartPage(),
           AppRoutes.HOME: (context) => const ProductOverviewPage(),
+          AppRoutes.AUTH: (context) => const AuthPage(),
           AppRoutes.ORDERS: (context) => const OrdersPage(),
           AppRoutes.PRODUCTS: (context) => const ProductPage(),
           AppRoutes.PRODUCT_FORM: (context) => const ProductFormPage(),

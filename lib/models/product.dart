@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class Product with ChangeNotifier {
   });
 
   Future<void> toggleFavorite(Product product) async {
+    // ignore: prefer_const_declarations
     final _baseUrl =
         'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
 
