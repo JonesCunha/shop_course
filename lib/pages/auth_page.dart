@@ -15,6 +15,12 @@ class AuthPage extends StatelessWidget {
                   gradient: LinearGradient(
                       colors: [Colors.blue, Colors.pink],
                       transform: GradientRotation(6)))),
+          Center(
+            child: Container(
+              child: Card(child: Text('Textin')),
+            ),
+          ),
+          Text('texto'),
         ],
       ),
     );
