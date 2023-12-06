@@ -18,8 +18,8 @@ class AuthPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(0, 212, 255, 0.8),
-                  Color.fromRGBO(33, 75, 98, 0.5)
+                  Color.fromRGBO(0, 200, 10, 0.5),
+                  Color.fromRGBO(200, 15, 15, 0.5)
                 ],
                 begin: Alignment.centerLeft,
                 end: Alignment.bottomRight,
@@ -37,10 +37,10 @@ class AuthPage extends StatelessWidget {
                     vertical: 10,
                     horizontal: 70,
                   ),
-                  transform: Matrix4.rotationZ(-8 * pi / 250)..translate(-10.0),
+                  transform: Matrix4.rotationZ(-8 * pi / 250)..translate(-8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.deepPurple.shade700,
+                      color: Color.fromRGBO(0, 255, 0, 0.5),
                       boxShadow: [
                         BoxShadow(
                             blurRadius: 10,
@@ -48,11 +48,12 @@ class AuthPage extends StatelessWidget {
                             offset: Offset(-2, 8))
                       ]),
                   child: Text(
-                    'Minha Loja',
+                    'Regi Linda',
                     style: TextStyle(
                       fontSize: 45,
+                      fontWeight: FontWeight.bold,
                       fontFamily: 'Anton',
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 150, 50, 0.8),
                     ),
                   ),
                 ),

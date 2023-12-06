@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shop_curse/extensions/string_extensions.dart';
+import 'package:shop_curse/utils/app_routes.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
@@ -13,11 +14,14 @@ class AuthForm extends StatefulWidget {
 enum AuthMode { login, signUp }
 
 class _AuthFormState extends State<AuthForm> {
-  final _emailController = TextEditingController();
+  // final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   AuthMode _authMode = AuthMode.login;
 
-  void _submitForm() {}
+  void _submitForm() {
+    //Adicionado navigator por enquanto.
+    Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
+  }
 
   Map<String, String> _authData = {'email': '', 'password': ''};
 
@@ -40,8 +44,8 @@ class _AuthFormState extends State<AuthForm> {
                 onSaved: (email) => _authData['email'] = email ?? '',
                 validator: (email) {
                   final _email = email ?? '';
-                  if(_email.trim().isEmpty || !_email.isValidEmail()){
-                      return 'Informe um email válido';
+                  if (_email.trim().isEmpty || !_email.isValidEmail()) {
+                    return 'Informe um email válido';
                   }
                   return null;
                 },
@@ -54,7 +58,7 @@ class _AuthFormState extends State<AuthForm> {
                 controller: _passwordController,
                 validator: (password) {
                   final _password = password ?? '';
-                  if(_password.isEmpty || _password.length < 5){
+                  if (_password.isEmpty || _password.length < 5) {
                     return 'Informe uma senha válida';
                   }
                   return null;
@@ -67,7 +71,7 @@ class _AuthFormState extends State<AuthForm> {
                   obscureText: true,
                   validator: (password) {
                     final _password = password ?? '';
-                    if(_password != _passwordController.text){
+                    if (_password != _passwordController.text) {
                       return 'As senhas não coincidem';
                     }
                     return null;
