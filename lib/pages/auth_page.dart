@@ -26,39 +26,43 @@ class AuthPage extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            width: size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 70,
-                  ),
-                  transform: Matrix4.rotationZ(-8 * pi / 250)..translate(-8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(0, 255, 0, 0.5),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            color: Colors.black,
-                            offset: Offset(-2, 8))
-                      ]),
-                  child: Text(
-                    'Regi Linda',
-                    style: TextStyle(
-                      fontSize: 45,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Anton',
-                      color: Color.fromRGBO(255, 150, 50, 0.8),
+          SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.only(top: 100),
+              width: size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 60,
+                    ),
+                    transform: Matrix4.rotationZ(-8 * pi / 250)..translate(-8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromRGBO(0, 255, 0, 0.5),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 10,
+                              color: Colors.black,
+                              offset: Offset(-2, 8))
+                        ]),
+                    child: Text(
+                      'Minha Loja',
+                      style: TextStyle(
+                        fontSize: 45,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Anton',
+                        color: Color.fromRGBO(255, 150, 50, 0.8),
+                      ),
                     ),
                   ),
-                ),
-                AuthForm(),
-              ],
+                  AuthForm(),
+                ],
+              ),
             ),
           )
         ],
