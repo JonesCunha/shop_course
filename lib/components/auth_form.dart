@@ -32,27 +32,19 @@ class _AuthFormState extends State<AuthForm> {
 
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
-
-    if (!isValid) {
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
+    if (!isValid) {return;}
     _formKey.currentState?.save();
+    setState(() => _isLoading = true);
     Auth auth = Provider.of(context, listen: false);
-
     if (_islogin()) {
       // Login
     } else {
       // Registrar
-      print(_authData);
       await auth.signup(
         _authData['email']!,
         _authData['password']!,
       );
     }
-
     setState(() {
       _isLoading = false;
     });

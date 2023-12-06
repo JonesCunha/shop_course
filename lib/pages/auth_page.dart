@@ -48,10 +48,10 @@ class AuthPage extends StatelessWidget {
                           BoxShadow(
                               blurRadius: 10,
                               color: Colors.black,
-                              offset: Offset(-2, 8))
+                              offset: Offset(-2, 4))
                         ]),
                     child: Text(
-                      'Minha Loja',
+                      'App bLa Bla',
                       style: TextStyle(
                         fontSize: 45,
                         fontWeight: FontWeight.bold,
