@@ -23,5 +23,9 @@ themeData() {
       color: Colors.red,
     ),
     useMaterial3: true,
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(fontWeight: FontWeight.bold),
+      titleLarge: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    )
   );
 }
