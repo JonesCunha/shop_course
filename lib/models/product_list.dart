@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:shop_curse/models/product.dart';
 
 class ProductList with ChangeNotifier {
-  String _token;
+  final String _token;
+  // ignore: prefer_final_fields
   List<Product> _items = [];
   //bool _showFavoriteOnly = false;
 
   ProductList(this._token, this._items);
 
   final baseUrl = 'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
-
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
       _items.where((element) => element.isFavorite).toList();
@@ -37,7 +37,7 @@ class ProductList with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) {
-    var future = http.post(Uri.parse('$baseUrl.json'),
+    var future = http.post(Uri.parse('$baseUrl.json?auth=$_token'),
         body: jsonEncode({
           "name": product.name,
           "description": product.description,
@@ -80,7 +80,7 @@ class ProductList with ChangeNotifier {
 
     if (index >= 0) {
       await http.patch(
-        Uri.parse('$baseUrl/${product.id}.json'),
+        Uri.parse('$baseUrl/${product.id}.json?auth=$_token'),
         body: jsonEncode(
           {
             "name": product.name,
@@ -101,7 +101,7 @@ class ProductList with ChangeNotifier {
   }
 
   Future<void> removeItem(Product product) async {
-    await http.delete(Uri.parse('$baseUrl/${product.id}.json'));
+    await http.delete(Uri.parse('$baseUrl/${product.id}.json?auth=$_token'));
     _items.remove(product);
     notifyListeners();
   }

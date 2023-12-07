@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,15 +23,18 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  Future<void> toggleFavorite(Product product) async {
+  Future<void> toggleFavorite(String token) async {
     // ignore: prefer_const_declarations
     final _baseUrl =
         'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
 
-    isFavorite = !isFavorite;
-    notifyListeners();
-
-    await http.patch(Uri.parse('$_baseUrl/${product.id}.json'),
+    final response = await http.patch(
+        Uri.parse('$_baseUrl/$id.json?auth=$token'),
         body: jsonEncode({'isFavorite': isFavorite}));
+
+    if (response.statusCode < 400) {
+      isFavorite = !isFavorite;
+      notifyListeners();
+    }
   }
 }

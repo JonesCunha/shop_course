@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_curse/models/auth.dart';
 import 'package:shop_curse/utils/app_routes.dart';
 import '../models/cart.dart';
 import '../models/product.dart';
@@ -15,6 +16,8 @@ class ProductGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
+    final auth = Provider.of<Auth>(context);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -23,7 +26,7 @@ class ProductGridItem extends StatelessWidget {
         //   textAlign: TextAlign.center,
         //   style: TextStyle(color: Colors.red),
         // ),
-        footer: Container(
+        footer: SizedBox(
           width: 5,
           child: GridTileBar(
             title: Text(
@@ -45,7 +48,7 @@ class ProductGridItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
                 // focusColor: Colors.amber.withOpacity(0.3),
                 onPressed: () {
-                  product.toggleFavorite(product);
+                  product.toggleFavorite(auth.token ?? '');
                 },
               ),
             ),

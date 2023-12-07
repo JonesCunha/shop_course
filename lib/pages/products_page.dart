@@ -17,24 +17,24 @@ class ProductPage extends StatelessWidget {
     final productList = Provider.of<ProductList>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gerenciar Produtos'),
+        title: const Text('Gerenciar Produtos'),
         actions: [
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(AppRoutes.PRODUCT_FORM);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.add,
               color: Colors.white,
             ),
           )
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () => _refreshProducts(context),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListView.builder(
             itemCount: productList.itemCount,
             itemBuilder: (context, index) => Column(

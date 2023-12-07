@@ -17,7 +17,7 @@ class ProductItem extends StatelessWidget {
         backgroundImage: NetworkImage(product.imageUrl),
         radius: 30,
       ),
-      trailing: Container(
+      trailing: SizedBox(
         width: 100,
         child: Row(
           children: [
@@ -36,11 +36,11 @@ class ProductItem extends StatelessWidget {
                   builder: (context) {
                     return AlertDialog(
                       title: Text('Excluir o item : ${product.name}'),
-                      content: Text('Tem certeza?'),
+                      content: const Text('Tem certeza?'),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text('Não'),
+                          child: const Text('Não'),
                         ),
                         TextButton(
                           onPressed: () {
@@ -48,7 +48,7 @@ class ProductItem extends StatelessWidget {
                                 .removeItem(product);
                             Navigator.of(context).pop();
                           },
-                          child: Text('Sim'),
+                          child: const Text('Sim'),
                         ),
                       ],
                     );

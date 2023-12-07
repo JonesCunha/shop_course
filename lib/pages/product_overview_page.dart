@@ -20,7 +20,7 @@ class ProductOverviewPage extends StatefulWidget {
 
 class _ProductOverviewPageState extends State<ProductOverviewPage> {
   bool _showFavoriteOnly = false;
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   @override
   void initState() {
