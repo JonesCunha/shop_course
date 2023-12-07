@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_curse/exceptions/auth_exception.dart';
 import 'package:shop_curse/extensions/string_extensions.dart';
 import 'package:shop_curse/models/auth.dart';
 
@@ -15,7 +16,7 @@ class AuthForm extends StatefulWidget {
 enum AuthMode { login, signUp }
 
 class _AuthFormState extends State<AuthForm> {
-  // final _emailController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   AuthMode _authMode = AuthMode.login;
@@ -32,18 +33,31 @@ class _AuthFormState extends State<AuthForm> {
 
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
-    if (!isValid) {return;}
+    if (!isValid) {
+      return;
+    }
     _formKey.currentState?.save();
     setState(() => _isLoading = true);
-    Auth auth = Provider.of(context, listen: false);
-    if (_islogin()) {
-      // Login
-    } else {
-      // Registrar
-      await auth.signup(
-        _authData['email']!,
-        _authData['password']!,
-      );
+    Auth auth = Provider.of<Auth>(context, listen: false);
+
+    try {
+      if (_islogin()) {
+        await auth.login(
+          _authData['email']!,
+          _authData['password']!,
+        );
+        // _showErrorDialog('Logado com Sucesso');
+      } else {
+        // Registrar
+        await auth.signup(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      }
+    } on AuthException catch (error) {
+      _showErrorDialog(error.toString());
+    } catch (error) {
+      _showErrorDialog('Ocorreu um erro inesperado');
     }
     setState(() {
       _isLoading = false;
@@ -53,7 +67,41 @@ class _AuthFormState extends State<AuthForm> {
     // Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
   }
 
+  void _showErrorDialog(String msg) {
+    // print(msg);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          alignment: Alignment.center,
+          icon: Icon(Icons.error, size: 32),
+          elevation: 8,
+          title: Text(
+            'Ocorreu um Erro!',
+            textAlign: TextAlign.start,
+          ),
+          content: Text(
+            msg,
+            style: TextStyle(fontSize: 18, color: Colors.black),
+          ),
+          actions: [
+            TextButton(
+                //Navigator.pop já é uma função com retorno esperado pelo on pressed, nao precisa necessariamente de uma função anonima.
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Fechar'))
+          ],
+        );
+      },
+    );
+  }
+
   void _switchAuthMode() {
+    _formKey.currentState?.reset();
+    _passwordController.clear();
+    _emailController.clear();
+    //O metodo abaixo limpou todos os campos, reconstruindo eles, retirando os valores dos controllers da tela.
+    _formKey.currentState?.build(context);
     if (_islogin()) {
       setState(() {
         _authMode = AuthMode.signUp;
@@ -74,7 +122,7 @@ class _AuthFormState extends State<AuthForm> {
         elevation: 8,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          height: _islogin() ? 300 : 420,
+          height: _islogin() ? 340 : 420,
           width: deviceSize.width * 0.8,
           padding: EdgeInsets.all(16),
           child: Form(
@@ -87,6 +135,7 @@ class _AuthFormState extends State<AuthForm> {
                   decoration: InputDecoration(labelText: 'Email'),
                   keyboardType: TextInputType.emailAddress,
                   onSaved: (email) => _authData['email'] = email ?? '',
+                  controller: _emailController,
                   validator: (email) {
                     final _email = email ?? '';
                     if (_email.trim().isEmpty || !_email.isValidEmail()) {

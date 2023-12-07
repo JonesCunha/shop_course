@@ -56,7 +56,7 @@ class AuthPage extends StatelessWidget {
                         fontSize: 45,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Anton',
-                        color: Color.fromRGBO(255, 150, 50, 0.8),
+                        color: Colors.white70
                       ),
                     ),
                   ),

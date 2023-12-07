@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop_curse/apikeys/apikeys.dart';
+import 'package:shop_curse/api/apikeys.dart';
+import 'package:shop_curse/exceptions/auth_exception.dart';
 
 class Auth with ChangeNotifier {
 
@@ -14,12 +15,20 @@ class Auth with ChangeNotifier {
         {'email': email, 'password': password, 'returnSecureToken': true},
       ),
     );
-    print(jsonDecode(response.body));
+    final body = jsonDecode(response.body);
 
+    if(body['error'] != null){
+      // print(body['error']['message']);
+      throw AuthException(body['error']['message']);
+    }
   }
 
   Future<void> signup(String email, String password) async {
-    _autenticate(email, password, 'signUp');
+    return _autenticate(email, password, 'signUp');
+  }
+
+  Future<void> login(String email, String password) async {
+    return _autenticate(email, password, 'signInWithPassword');
   }
 
 }
