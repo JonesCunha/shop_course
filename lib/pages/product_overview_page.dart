@@ -25,13 +25,10 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
   @override
   void initState() {
     super.initState();
-    // _isLoading = true;
-    // Provider.of<ProductList>(context, listen: false)
-    // .loadProducts()
-    // .then((value) {
-    setState(() {
-      _isLoading = false;
-    });
+    // Provider.of<ProductList>(context, listen: false).loadProducts();
+    // setState(() {
+    //   _isLoading = false;
+    // });
     // });
   }
 

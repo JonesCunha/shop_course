@@ -6,8 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:shop_curse/models/product.dart';
 
 class ProductList with ChangeNotifier {
-  final List<Product> _items = [];
+  String _token;
+  List<Product> _items = [];
   //bool _showFavoriteOnly = false;
+
+  ProductList(this._token, this._items);
 
   final baseUrl = 'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
 
@@ -17,7 +20,7 @@ class ProductList with ChangeNotifier {
 
   Future<void> loadProducts() async {
     _items.clear();
-    final response = await http.get(Uri.parse('$baseUrl.json'));
+    final response = await http.get(Uri.parse('$baseUrl.json?auth=$_token'));
     Map<String, dynamic> data = jsonDecode(response.body);
     data.forEach((key, value) {
       _items.add(
