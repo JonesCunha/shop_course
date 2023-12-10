@@ -18,8 +18,8 @@ class AuthPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(56, 116, 59, 0.498),
-                  Color.fromRGBO(200, 15, 15, 0.5)
+                  Color.fromRGBO(148, 196, 151, 0.494),
+                  Color.fromRGBO(123, 68, 68, 0.498)
                 ],
                 begin: Alignment.centerLeft,
                 end: Alignment.bottomRight,
@@ -28,7 +28,7 @@ class AuthPage extends StatelessWidget {
           ),
           SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.only(top: 100),
+              margin: EdgeInsets.only(top: 200),
               width: size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +38,7 @@ class AuthPage extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 20),
                     padding: EdgeInsets.symmetric(
                       vertical: 10,
-                      horizontal: 60,
+                      horizontal: 20,
                     ),
                     transform: Matrix4.rotationZ(-8 * pi / 250)
                       ..translate(-8.0),

@@ -19,61 +19,73 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     final items = cart.items.values.toList();
+    bool hasItens = false;
+
+    if (items.length <= 0) {
+      hasItens = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Carrinho'),
       ),
-      body: Column(children: [
-        Card(
-          margin: EdgeInsets.all(16),
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Total',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Chip(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  label: Text(
-                    'R\$${cart.totalAmout.toStringAsFixed(2)}',
-                    style: TextStyle(
-                        color: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyLarge
-                            ?.color),
+      body: hasItens
+          ? Center(
+              child: Text('Nao ha itens em seu carrinho'),
+            )
+          : Column(children: [
+              Card(
+                margin: EdgeInsets.all(16),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Chip(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        label: Text(
+                          'R\$${cart.totalAmout.toStringAsFixed(2)}',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyLarge
+                                  ?.color),
+                        ),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Provider.of<OrderList>(context, listen: false)
+                              .addOrder(cart);
+                          cart.clear();
+                          setState(() {
+                            hasItens = false;
+                          });
+                        },
+                        style: TextButton.styleFrom(
+                            foregroundColor: Theme.of(context).primaryColor),
+                        child: Text('Comprar'),
+                      ),
+                    ],
                   ),
                 ),
-                Spacer(),
-                TextButton(
-                  onPressed: () {
-                    Provider.of<OrderList>(context, listen: false)
-                        .addOrder(cart);
-                    cart.clear();
-                  },
-                  style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).primaryColor),
-                  child: Text('Comprar'),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, index) => CartItemWidget(
+                    cartItem: items[index],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) => CartItemWidget(
-              cartItem: items[index],
-            ),
-          ),
-        ),
-      ]),
+              ),
+            ]),
     );
   }
 }

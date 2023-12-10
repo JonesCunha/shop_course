@@ -37,18 +37,17 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
     // Provider.of<ProductList>(context).loadProducts();
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        titleTextStyle: TextStyle(letterSpacing: 2, fontSize: 32),
+        elevation: 5,
+        backgroundColor: const Color.fromARGB(255, 191, 176, 130),
         title: const Text('Minha Loja'),
         actions: [
-          IconButton(
-              onPressed: () {
-                Provider.of<ProductList>(context, listen: false).loadProducts();
-              },
-              icon: Icon(Icons.ac_unit)),
           PopupMenuButton(
               icon: _showFavoriteOnly
                   ? Icon(
                       Icons.favorite_sharp,
-                      color: Colors.red,
+                      color: Color.fromARGB(255, 210, 0, 22),
                     )
                   : Icon(Icons.favorite_outline),
               itemBuilder: (context) => [
