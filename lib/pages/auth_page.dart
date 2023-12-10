@@ -18,7 +18,7 @@ class AuthPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(0, 200, 10, 0.5),
+                  Color.fromRGBO(56, 116, 59, 0.498),
                   Color.fromRGBO(200, 15, 15, 0.5)
                 ],
                 begin: Alignment.centerLeft,
@@ -40,7 +40,8 @@ class AuthPage extends StatelessWidget {
                       vertical: 10,
                       horizontal: 60,
                     ),
-                    transform: Matrix4.rotationZ(-8 * pi / 250)..translate(-8.0),
+                    transform: Matrix4.rotationZ(-8 * pi / 250)
+                      ..translate(-8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Color.fromRGBO(0, 255, 0, 0.5),
@@ -53,11 +54,10 @@ class AuthPage extends StatelessWidget {
                     child: Text(
                       'App bLa Bla',
                       style: TextStyle(
-                        fontSize: 45,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Anton',
-                        color: Colors.white70
-                      ),
+                          fontSize: 45,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Anton',
+                          color: Colors.white70),
                     ),
                   ),
                   AuthForm(),
