@@ -1,19 +1,20 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop_curse/constants/urls.dart';
 import 'package:shop_curse/models/product.dart';
 
 class ProductList with ChangeNotifier {
   final String _token;
+  final String _userId;
   // ignore: prefer_final_fields
   List<Product> _items = [];
   //bool _showFavoriteOnly = false;
 
-  ProductList(this._token, this._items);
+  ProductList([this._token = '', this._items = const [], this._userId = '']);
 
-  final baseUrl = 'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
+  final baseUrl = Constants.BASE_URL_PRODUCTS;
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
       _items.where((element) => element.isFavorite).toList();
@@ -21,6 +22,14 @@ class ProductList with ChangeNotifier {
   Future<void> loadProducts() async {
     _items.clear();
     final response = await http.get(Uri.parse('$baseUrl.json?auth=$_token'));
+    if (response.body == 'null') return;
+
+    final responseFavorite = await http.get(
+      Uri.parse('${Constants.BASE_URL_FAVORITES}/$_userId.json?auth=$_token'),
+    );
+
+    Map<String, dynamic> favoriteData = responseFavorite.body == 'null' ? {} : jsonDecode(responseFavorite.body);
+
     Map<String, dynamic> data = jsonDecode(response.body);
     data.forEach((key, value) {
       _items.add(
@@ -30,6 +39,7 @@ class ProductList with ChangeNotifier {
           description: value['description'],
           price: double.parse(value['price'].toString()),
           imageUrl: value['imageUrl'],
+          isFavorite: favoriteData[key] ?? false
         ),
       );
       notifyListeners();
@@ -43,7 +53,6 @@ class ProductList with ChangeNotifier {
           "description": product.description,
           "price": product.price,
           "imageUrl": product.imageUrl,
-          "isFavorite": product.isFavorite,
         }));
     return future.then((value) {
       _items.add(Product(

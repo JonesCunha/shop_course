@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop_curse/constants/urls.dart';
 
 class Product with ChangeNotifier {
   final String id;
@@ -23,14 +24,13 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  Future<void> toggleFavorite(String token) async {
+  Future<void> toggleFavorite(String token, String userID) async {
     // ignore: prefer_const_declarations
-    final _baseUrl =
-        'https://shop-jp-11ae4-default-rtdb.firebaseio.com/products';
 
-    final response = await http.patch(
-        Uri.parse('$_baseUrl/$id.json?auth=$token'),
-        body: jsonEncode({'isFavorite': isFavorite}));
+    final response = await http.put(
+      Uri.parse('${Constants.BASE_URL_FAVORITES}/$userID/$id.json?auth=$token'),
+      body: jsonEncode(!isFavorite),
+    );
 
     if (response.statusCode < 400) {
       isFavorite = !isFavorite;
