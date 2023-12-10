@@ -28,7 +28,7 @@ class AuthPage extends StatelessWidget {
           ),
           SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.only(top: 200),
+              margin: EdgeInsets.only(top: 100),
               width: size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -21,13 +21,14 @@ class _CartPageState extends State<CartPage> {
     final items = cart.items.values.toList();
     bool hasItens = false;
 
-    if (items.length <= 0) {
+    if (items.isEmpty) {
       hasItens = true;
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Carrinho'),
+        backgroundColor:  const Color.fromARGB(255, 191, 176, 130),
       ),
       body: hasItens
           ? Center(

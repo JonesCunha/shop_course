@@ -27,6 +27,8 @@ class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isLoading = false;
+  bool _rememberUser = false;
+  bool passwordVisible = true;
 
   bool _islogin() => _authMode == AuthMode.login;
   bool _isSignUp() => _authMode == AuthMode.signUp;
@@ -116,87 +118,120 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      primary: false,
-      child: Card(
-        elevation: 8,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          height: _islogin() ? 340 : 420,
-          width: deviceSize.width * 0.8,
-          padding: EdgeInsets.all(16),
-          child: Form(
-            //Valida o Formulario Antes de iniciar.
-            // autovalidateMode: AutovalidateMode.always,
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Email'),
-                  keyboardType: TextInputType.emailAddress,
-                  onSaved: (email) => _authData['email'] = email ?? '',
-                  controller: _emailController,
-                  validator: (email) {
-                    final _email = email ?? '';
-                    if (_email.trim().isEmpty || !_email.isValidEmail()) {
-                      return 'Informe um email válido';
-                    }
-                    return null;
-                  },
+    return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Container(
+        height: _islogin() ? 380 : 420,
+        width: deviceSize.width * 0.8,
+        padding: EdgeInsets.all(16),
+        child: Form(
+          //Valida o Formulario Antes de iniciar.
+          // autovalidateMode: AutovalidateMode.always,
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  hintText: 'Informe seu Email',
+                  suffixIcon: Icon(Icons.account_circle_outlined),
                 ),
+                keyboardType: TextInputType.emailAddress,
+                onSaved: (email) => _authData['email'] = email ?? '',
+                controller: _emailController,
+                validator: (email) {
+                  final _email = email ?? '';
+                  if (_email.trim().isEmpty || !_email.isValidEmail()) {
+                    return 'Informe um email válido';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Senha',
+                  hintText: 'Informe sua Senha',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                    icon: passwordVisible
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+                  ),
+                ),
+                keyboardType: TextInputType.emailAddress,
+                obscureText: passwordVisible,
+                onFieldSubmitted: (_) => _submitForm(),
+                onSaved: (password) => _authData['password'] = password ?? '',
+                controller: _passwordController,
+                validator: (password) {
+                  final _password = password ?? '';
+                  if (_password.isEmpty || _password.length < 5) {
+                    return 'Informe uma senha válida';
+                  }
+                  return null;
+                },
+              ),
+              if (_isSignUp())
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Senha'),
+                  decoration: InputDecoration(labelText: 'Confirmar Senha'),
                   keyboardType: TextInputType.emailAddress,
                   obscureText: true,
-                  onSaved: (password) => _authData['password'] = password ?? '',
-                  controller: _passwordController,
                   validator: (password) {
                     final _password = password ?? '';
-                    if (_password.isEmpty || _password.length < 5) {
-                      return 'Informe uma senha válida';
+                    if (_password != _passwordController.text) {
+                      return 'As senhas não coincidem';
                     }
                     return null;
                   },
                 ),
-                if (_isSignUp())
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Confirmar Senha'),
-                    keyboardType: TextInputType.emailAddress,
-                    obscureText: true,
-                    validator: (password) {
-                      final _password = password ?? '';
-                      if (_password != _passwordController.text) {
-                        return 'As senhas não coincidem';
-                      }
-                      return null;
-                    },
-                  ),
-                SizedBox(
-                  height: 20,
-                ),
-                _isLoading
-                    ? CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: _submitForm,
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 8)),
-                        child: Text(
-                          _authMode == AuthMode.login ? 'Entrar' : 'Registrar',
-                          style: TextStyle(fontSize: 20),
+              SizedBox(
+                height: 20,
+              ),
+              if (!_isSignUp())
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberUser,
+                          onChanged: (value) => setState(() {
+                            _rememberUser = value!;
+                          }),
                         ),
+                        Text('Lembrar Senha'),
+                      ],
+                    )
+                  ],
+                ),
+              SizedBox(),
+              _isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: _submitForm,
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 8)),
+                      child: Text(
+                        _authMode == AuthMode.login ? 'Entrar' : 'Registrar',
+                        style: TextStyle(fontSize: 20),
                       ),
-                Spacer(),
-                TextButton(
-                    onPressed: _switchAuthMode,
-                    child: _islogin()
-                        ? Text('Deseja Registrar?')
-                        : Text('Já possui conta?')),
-              ],
-            ),
+                    ),
+              Spacer(),
+              TextButton(
+                  onPressed: _switchAuthMode,
+                  child: _islogin()
+                      ? Text('Deseja Registrar?')
+                      : Text('Já possui conta?')),
+            ],
           ),
         ),
       ),

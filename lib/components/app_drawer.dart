@@ -55,6 +55,14 @@ class AppDrawer extends StatelessWidget {
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(AppRoutes.PRODUCTS),
           ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Sair/Logout'),
+            onTap: () {
+                Navigator.of(context).pushReplacementNamed(AppRoutes.AUTH_OR_HOME_PAGE);
+            }
+          ),
         ],
       ),
     );
