@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_curse/components/app_drawer.dart';
-import 'package:shop_curse/models/product_list.dart';
 import 'package:shop_curse/utils/app_routes.dart';
 import '../components/badgee.dart';
 import '../components/product_grid.dart';
