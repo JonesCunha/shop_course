@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:shop_curse/utils/app_routes.dart';
 
@@ -7,18 +9,37 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      // backgroundColor: const Color.fromRGBO(255, 191, 176, 130),
       child: Column(
         children: [
           AppBar(
-            title: const Text('Bem Vindo Usuário'),
+            centerTitle: true,
+            leading: Padding(padding: EdgeInsets.all(5), child: CircleAvatar()),
+            backgroundColor: const Color.fromARGB(255, 191, 176, 130),
+            titleSpacing: 2,
+            title: Column(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      'Bem Vindo',
+                      style: TextStyle(letterSpacing: 2, fontSize: 16),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [Text('Santigo')],
+                )
+              ],
+            ),
             automaticallyImplyLeading: false,
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.shop),
             title: const Text('Loja'),
-            onTap: () =>
-                Navigator.of(context).pushReplacementNamed(AppRoutes.AUTH_OR_HOME_PAGE),
+            onTap: () => Navigator.of(context)
+                .pushReplacementNamed(AppRoutes.AUTH_OR_HOME_PAGE),
           ),
           const Divider(),
           ListTile(

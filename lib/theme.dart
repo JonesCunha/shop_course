@@ -2,30 +2,28 @@ import 'package:flutter/material.dart';
 
 themeData() {
   return ThemeData(
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.deepPurple,
-      elevation: 5,
-      titleTextStyle: TextStyle(
-        fontSize: 26,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.deepPurple,
+        elevation: 5,
+        titleTextStyle: TextStyle(
+          fontSize: 26,
+        ),
+        centerTitle: true,
       ),
-      centerTitle: true,
-    ),
-    primarySwatch: Colors.deepPurple,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.deepPurple,
-      background: Colors.white70,
-      error: Colors.red,
-      secondary: Colors.deepOrange
-    ),
-    primaryColor: Colors.deepPurple,
-    fontFamily: 'Lato',
-    iconTheme: const IconThemeData(
-      color: Colors.red,
-    ),
-    useMaterial3: true,
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontWeight: FontWeight.bold),
-      titleLarge: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-    )
-  );
+      primarySwatch: Colors.deepPurple,
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          background: Colors.white70,
+          error: Colors.red,
+          secondary: Colors.deepOrange),
+      primaryColor: Colors.deepPurple,
+      fontFamily: 'Lato',
+      iconTheme: const IconThemeData(
+        color: Colors.red,
+      ),
+      useMaterial3: true,
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(fontWeight: FontWeight.bold),
+        titleLarge: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+      ));
 }
